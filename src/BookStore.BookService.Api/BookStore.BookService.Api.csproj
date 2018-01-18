@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -105,6 +106,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BookStore.BookService.DataAccess\BookStore.BookService.DataAccess.csproj">
+      <Project>{c3ba6f79-6665-4c39-a6ce-f50a6f399ae3}</Project>
+      <Name>BookStore.BookService.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BookStore.BookService.Design\BookStore.BookService.Design.csproj">
       <Project>{e99e728a-722f-43a5-abc8-52240154edf9}</Project>
       <Name>BookStore.BookService.Design</Name>
