@@ -1,5 +1,4 @@
 ﻿using BookStore.BookService.Design.Abstractions.DataAccess;
-using System;
 using System.Collections.Generic;
 using BookStore.BookService.Design.Models;
 using System.Data;
@@ -9,7 +8,12 @@ using System.Linq;
 
 public class GenreDao : IGenreDao
 {
-    static string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BookStore.Book;Integrated Security=True;";
+    private readonly string connectionString;
+
+    public GenreDao(IConnectionStringGetter getter)
+    {
+        this.connectionString = getter.Get();
+    }
 
     public Genre GetGenre(int id)
     {

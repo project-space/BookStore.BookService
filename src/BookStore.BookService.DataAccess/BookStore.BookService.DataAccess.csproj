@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookDao.cs" />
+    <Compile Include="ConnectionStringGetter.cs" />
     <Compile Include="GenreDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

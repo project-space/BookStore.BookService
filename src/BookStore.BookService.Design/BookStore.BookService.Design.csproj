@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\DataAccess\IBookDao.cs" />
+    <Compile Include="Abstractions\DataAccess\IConnectionStringGetter.cs" />
     <Compile Include="Abstractions\DataAccess\IGenreDao.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Genre.cs" />

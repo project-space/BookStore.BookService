@@ -11,7 +11,12 @@ namespace BookStore.BookService.DataAccess
 {
     public class BookDao : IBookDao
     {
-        static string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BookStore.Book;Integrated Security=True;";
+        private readonly string connectionString;
+
+        public BookDao(IConnectionStringGetter getter)
+        {
+            this.connectionString = getter.Get();
+        }
 
         public List<Book> Get()
         {

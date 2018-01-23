@@ -9,7 +9,13 @@ namespace BookStore.BookService.Api.Controllers
     [RoutePrefix("api/books")]
     public class BooksController : ApiController
     {
-        private readonly IBookDao bookDao = new BookDao();
+        private readonly IBookDao bookDao;
+
+        public BooksController(IBookDao bookDao)
+        {
+            this.bookDao = bookDao;
+        }
+
         [HttpGet, Route("{id}")]
         public Book GetBook(int id)
         {

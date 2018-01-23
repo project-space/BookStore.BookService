@@ -9,7 +9,12 @@ namespace BookStore.BookService.Api.Controllers
     [RoutePrefix("api/genres")]
     public class GenresController : ApiController
     {
-        private readonly IGenreDao genreDao = new GenreDao();
+        private readonly IGenreDao genreDao;
+
+        public GenresController(IGenreDao genreDao)
+        {
+            this.genreDao = genreDao;
+        }
 
         [Route("genres/{id}")]
         public Genre GetGenre(int id)
