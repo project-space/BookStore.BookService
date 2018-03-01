@@ -9,7 +9,7 @@ namespace BookStore.BookService.Design.Abstractions.DataAccess
 {
     public interface IGenreDao
     {
-        Genre GetGenre(int id);
-        List<Genre> GetAll();
+        Task<Genre> GetGenre(int id);
+        Task<List<Genre>> GetAll();
     }
 }

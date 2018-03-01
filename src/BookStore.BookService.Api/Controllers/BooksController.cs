@@ -1,7 +1,7 @@
-﻿using BookStore.BookService.DataAccess;
-using BookStore.BookService.Design.Abstractions.DataAccess;
+﻿using BookStore.BookService.Design.Abstractions.DataAccess;
 using BookStore.BookService.Design.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BookStore.BookService.Api.Controllers
@@ -17,32 +17,33 @@ namespace BookStore.BookService.Api.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public Book GetBook(int id)
+        public async Task<Book> GetBook(int id)
         {
-            return bookDao.Get(id);
+            return await bookDao.Get(id).ConfigureAwait(false);
         }
 
         [HttpPost, Route("byIds")]
-        public List<Book> GetBooks(List<int> ids)
+        public async Task<List<Book>> GetBooks(List<int> ids)
         {
-            return bookDao.Get(ids);
+            return await bookDao.Get(ids).ConfigureAwait(false);
         }
 
         [HttpGet, Route("novelties")]
-        public List<Book> GetNovelties()
+        public async Task<List<Book>> GetNovelties()
         {
-            return bookDao.GetNovelties();
+            return await bookDao.GetNovelties().ConfigureAwait(false);
         }
+
         [HttpGet, Route("popular")]
-        public List<Book> GetPopular()
+        public async Task<List<Book>> GetPopular()
         {
-            return bookDao.GetPopular();
+            return await bookDao.GetPopular().ConfigureAwait(false);
         }
 
         [HttpGet, Route("withGenre/{id}")]
-        public List<Book> GetWithGenre(int id)
+        public async Task<List<Book>> GetWithGenre(int id)
         {
-            return bookDao.GetWithGenre(id);
+            return await bookDao.GetWithGenre(id).ConfigureAwait(false);
         }
 
     }

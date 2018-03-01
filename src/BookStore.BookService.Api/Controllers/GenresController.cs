@@ -1,7 +1,7 @@
-﻿using BookStore.BookService.DataAccess;
-using BookStore.BookService.Design.Abstractions.DataAccess;
+﻿using BookStore.BookService.Design.Abstractions.DataAccess;
 using BookStore.BookService.Design.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BookStore.BookService.Api.Controllers
@@ -17,14 +17,15 @@ namespace BookStore.BookService.Api.Controllers
         }
 
         [Route("genres/{id}")]
-        public Genre GetGenre(int id)
+        public async Task<Genre> GetGenre(int id)
         {
-            return genreDao.GetGenre(id);
+            return await genreDao.GetGenre(id).ConfigureAwait(false);
         }
+
         [Route("genres")]
-        public List<Genre> GetGenre()
+        public async Task<List<Genre>> GetGenre()
         {
-            return genreDao.GetAll();
+            return await genreDao.GetAll().ConfigureAwait(false);
         }
     }
 }

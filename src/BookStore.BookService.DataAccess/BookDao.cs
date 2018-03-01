@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Dapper;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookStore.BookService.DataAccess
 {
@@ -18,23 +19,27 @@ namespace BookStore.BookService.DataAccess
             this.connectionString = getter.Get();
         }
 
-        public List<Book> Get()
+        public async Task<List<Book>> Get()
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-               return db.Query<Book>("SELECT * FROM RatingBook").ToList();
+               var books = await db.QueryAsync<Book>("SELECT * FROM RatingBook").ConfigureAwait(false);
+
+               return books.ToList();
             }
         }
 
-        public Book Get(int id)
+        public async Task<Book> Get(int id)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<Book>("SELECT * FROM RatingBook where Id=@id", new { id }).FirstOrDefault();
+                var book = await db.QueryAsync<Book>("SELECT * FROM RatingBook where Id=@id",
+                                                      new { id }).ConfigureAwait(false);
+                return book.FirstOrDefault();
             }
         }
 
-        public List<Book> Get(List<int> ids)
+        public async Task<List<Book>> Get(List<int> ids)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
@@ -51,33 +56,38 @@ namespace BookStore.BookService.DataAccess
                     bulkCopy.WriteToServer(dtable);
                 }
 
-                return db.Query<Book>(@"SELECT * FROM RatingBook where Id in (select BookId from #BookIds);
-                                        drop table BookIds;").ToList();
+                var books = await db.QueryAsync<Book>(@"SELECT * FROM RatingBook where Id in 
+                                                        (select BookId from #BookIds);
+                                                        drop table BookIds;").ConfigureAwait(false);
+                return books.ToList();
+
             }
         }
 
-        public List<Book> GetNovelties()
+        public async Task<List<Book>> GetNovelties()
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<Book>("SELECT top 15 * FROM RatingBook order by ReleaseDate desc ").ToList();
+                var novelties = await db.QueryAsync<Book>("SELECT top 4 * FROM RatingBook order by ReleaseDate desc ").ConfigureAwait(false);
+                return novelties.ToList();
             }
         }
 
-        public List<Book> GetPopular()
+        public async Task<List<Book>> GetPopular()
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<Book>("SELECT top 15 * FROM RatingBook order by Rating desc ").ToList();
+                var popular = await db.QueryAsync<Book>("SELECT top 4 * FROM RatingBook order by Rating desc ").ConfigureAwait(false);
+                return popular.ToList();
             }
         }
 
-        public List<Book> GetWithGenre(int id)
+        public async Task<List<Book>> GetWithGenre(int id)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                
-                return db.Query<Book>("select * from Book where GenreId=@id", new { id }).ToList();
+            {   
+                var booksWithGenre = await db.QueryAsync<Book>("select * from Book where GenreId=@id", new { id }).ConfigureAwait(false);
+                return booksWithGenre.ToList();
             }
         }
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Dapper;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class GenreDao : IGenreDao
 {
@@ -15,19 +16,21 @@ public class GenreDao : IGenreDao
         this.connectionString = getter.Get();
     }
 
-    public Genre GetGenre(int id)
+    public async Task<Genre> GetGenre(int id)
     {
         using (IDbConnection db = new SqlConnection(connectionString))
         {
-            return db.Query<Genre>("SELECT * FROM Genre where Id=@id", new{ id }).FirstOrDefault();
+            var genre = await db.QueryAsync<Genre>("SELECT * FROM Genre where Id=@id", new{ id }).ConfigureAwait(false);
+            return genre.FirstOrDefault();
         }
     }
 
-    public List<Genre> GetAll()
+    public async Task<List<Genre>> GetAll()
     {
         using (IDbConnection db = new SqlConnection(connectionString))
         {
-            return db.Query<Genre>("SELECT * FROM Genre").ToList();
+            var genres = await db.QueryAsync<Genre>("SELECT * FROM Genre").ConfigureAwait(false);
+            return genres.ToList();
         }
     }
 }

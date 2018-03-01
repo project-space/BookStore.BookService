@@ -17,6 +17,7 @@ namespace BookStore.BookService.Api
             GlobalConfiguration.Configure(WebApiConfig.Register);
             var container = new ServiceContainer();
             container.RegisterApiControllers();
+            container.Register<IConnectionStringGetter, ConnectionStringGetter>();
             container.Register<IBookDao, BookDao>();
             container.Register<IGenreDao, GenreDao>();
             container.EnableWebApi(GlobalConfiguration.Configuration);
